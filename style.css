@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #003973, #00b09b);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    user-select: none;
+}
+
+header {
+    width: 100%;
+    max-width: 1000px;
+    font-weight: 700;
+    font-size: 1.75rem;
+    padding: 1rem 0;
+    border-bottom: 2px solid #00b09b;
+}
+
+main {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+section {
+    background-color: rgba(255 255 255 / 0.1);
+    border-radius: 10px;
+    padding: 1rem 1.5rem 1.5rem;
+    flex-grow: 1;
+    min-width: 320px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+section h2 {
+    text-align: center;
+    border-bottom: 2px solid #00b09b;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.3rem;
+    user-select: text;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+input[type="text"],
+textarea {
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+input[type="text"] {
+    height: 40px;
+}
+
+textarea {
+    resize: vertical;
+    height: 80px;
+    font-family: 'Roboto', sans-serif;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: 3px solid #00b09b;
+    background-color: #e0fff8;
+    color: #004d40;
+}
+
+button.save-btn {
+    background-color: #00b09b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.save-btn:hover,
+button.save-btn:focus {
+    background-color: #00806f;
+}
+
+.tasks-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    overflow-y: auto;
+    max-height: 550px;
+    padding-right: 5px;
+}
+
+.task-card {
+    background-color: rgba(255 255 255 / 0.85);
+    color: #222;
+    border-radius: 8px;
+    padding: 10px 15px;
+    display: grid;
+    grid-template-columns: 1fr 2.5fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 12px;
+    user-select: text;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    word-wrap: break-word;
+}
+
+.task-card.completed {
+    opacity: 0.7;
+    text-decoration: line-through;
+    background-color: #d0f0e5;
+    color: #264d33;
+}
+
+.task-title,
+.task-desc {
+    font-size: 1rem;
+    overflow-wrap: anywhere;
+}
+
+.task-datetime {
+    font-size: 0.75rem;
+    color: #555;
+    font-style: italic;
+    user-select: none;
+}
+
+.task-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.25s ease;
+    user-select: none;
+}
+
+.btn-complete {
+    background-color: #00b09b;
+    color: white;
+}
+
+.btn-complete:hover,
+.btn-complete:focus {
+    background-color: #00806f;
+}
+
+.btn-delete {
+    background-color: #d9534f;
+    color: white;
+}
+
+.btn-delete:hover,
+.btn-delete:focus {
+    background-color: #a12b28;
+}
+
+.btn-edit {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.btn-edit:hover,
+.btn-edit:focus {
+    background-color: #b47a27;
+}
+
+.edit-input {
+    font-size: 1rem;
+    padding: 5px 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.edit-input:focus {
+    border-color: #00b09b;
+    outline: none;
+    background-color: #e0fff8;
+    color: #004d40;
+}
+
+/* Scrollbar for tasks list */
+.tasks-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tasks-list::-webkit-scrollbar-thumb {
+    background-color: #00b09b;
+    border-radius: 20px;
+}
+
+.tasks-list::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    section {
+        max-width: 100%;
+    }
+
+    .task-card {
+        grid-template-columns: 1fr 2fr 1fr 1fr;
+    }
+}

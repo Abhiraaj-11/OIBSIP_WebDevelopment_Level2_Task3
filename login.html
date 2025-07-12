@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>To-Do List Web App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>To-Do List Web App</header>
+  <main>
+    <section aria-label="Add new task">
+      <h2>Add New Task</h2>
+      <form id="task-form" novalidate>
+        <input type="text" id="task-title" name="title" placeholder="Title" required aria-required="true" aria-label="Task title" autocomplete="off" />
+        <textarea id="task-desc" name="description" placeholder="Description" rows="3" required aria-required="true" aria-label="Task description"></textarea>
+        <button class="save-btn" type="submit" aria-label="Save new task">Save</button>
+      </form>
+    </section>
+
+    <section aria-label="Pending tasks">
+      <h2>Pending Tasks</h2>
+      <div id="pending-list" class="tasks-list" tabindex="0" aria-live="polite" aria-relevant="additions removals">
+      </div>
+    </section>
+
+    <section aria-label="Completed tasks">
+      <h2>Completed Tasks</h2>
+      <div id="completed-list" class="tasks-list" tabindex="0" aria-live="polite" aria-relevant="additions removals">
+      </div>
+    </section>
+  </main>
+  <script src="script.js" defer></script>
+</body>
+</html>
+
