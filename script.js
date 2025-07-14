@@ -10,23 +10,18 @@ function generateID() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-// Current tasks storage in memory
-// Structure: {id, title, description, isCompleted:boolean, createdAt:Date, completedAt:Date|null}
 let tasks = [];
 
-// Save tasks to localStorage for persistence
 function saveTasks() {
     localStorage.setItem('todoAppTasks', JSON.stringify(tasks));
 }
 
-// Load tasks from localStorage
 function loadTasks() {
     const stored = localStorage.getItem('todoAppTasks');
     if (stored) {
         try {
             let parsed = JSON.parse(stored);
             if (Array.isArray(parsed)) {
-                // Convert stored string timestamps back to Date objects
                 tasks = parsed.map(t => ({
                     ...t,
                     createdAt: new Date(t.createdAt),
@@ -40,7 +35,6 @@ function loadTasks() {
     }
 }
 
-// Format date/time as YYYY-MM-DD HH:MM (24hr)
 function formatDateTime(date) {
     if (!(date instanceof Date)) return '';
     const y = date.getFullYear();
@@ -51,25 +45,20 @@ function formatDateTime(date) {
     return `${y}-${m}-${d} ${h}:${min}`;
 }
 
-// Render all tasks - split between pending and completed
 function renderTasks() {
-    // Clear containers
     pendingList.innerHTML = '';
     completedList.innerHTML = '';
 
-    // Filter and render pending tasks
     tasks.filter(t => !t.isCompleted).forEach(task => {
         const el = createTaskElement(task);
         pendingList.appendChild(el);
     });
 
-    // Filter and render completed tasks
     tasks.filter(t => t.isCompleted).forEach(task => {
         const el = createTaskElement(task);
         completedList.appendChild(el);
     });
 
-    // Show placeholders if no tasks
     if (pendingList.children.length === 0) {
         pendingList.innerHTML = '<p style="color:#ccc; font-style:italic; user-select:none;">No pending tasks</p>';
     }
@@ -78,7 +67,6 @@ function renderTasks() {
     }
 }
 
-// Create task HTML element with buttons and handlers
 function createTaskElement(task) {
     const taskDiv = document.createElement('div');
     taskDiv.className = 'task-card' + (task.isCompleted ? ' completed' : '');
@@ -86,14 +74,12 @@ function createTaskElement(task) {
     taskDiv.setAttribute('role', 'listitem');
     taskDiv.tabIndex = 0;
 
-    // Title and description container or editable inputs
     const contentContainer = document.createElement('div');
     contentContainer.style.gridColumn = '1 / 3';
     contentContainer.style.display = 'flex';
     contentContainer.style.flexDirection = 'column';
     contentContainer.style.gap = '3px';
 
-    // Initially non-edit mode with text spans
     const titleSpan = document.createElement('span');
     titleSpan.className = 'task-title';
     titleSpan.textContent = task.title;
@@ -105,12 +91,10 @@ function createTaskElement(task) {
     contentContainer.appendChild(titleSpan);
     contentContainer.appendChild(descSpan);
 
-    // Created date display
     const createdDate = document.createElement('div');
     createdDate.className = 'task-datetime';
     createdDate.textContent = 'Added: ' + formatDateTime(task.createdAt);
 
-    // Completed date display (only for completed tasks)
     const completedDate = document.createElement('div');
     completedDate.className = 'task-datetime';
     completedDate.style.justifySelf = 'start';
@@ -118,8 +102,6 @@ function createTaskElement(task) {
         completedDate.textContent = 'Completed: ' + formatDateTime(task.completedAt);
     }
 
-    // Buttons container
-    // We create these as buttons for accessibility
     const btnComplete = document.createElement('button');
     btnComplete.className = 'task-btn btn-complete';
     btnComplete.type = 'button';
@@ -138,23 +120,17 @@ function createTaskElement(task) {
     btnDelete.setAttribute('aria-label', 'Delete task');
     btnDelete.textContent = '✕';
 
-    // Grid positioning: title/desc span 1-2 columns, createdDate col 3,
-    // completedDate col 4, buttons col 5 (we combine buttons in one grid column)
-    // We add complete, edit and delete buttons side by side within this grid column
-    // So we have 5 columns, last column is a flex container with buttons horizontally
     taskDiv.style.display = 'grid';
     taskDiv.style.gridTemplateColumns = '1fr 2.5fr 1.2fr 1.2fr 1.6fr';
     taskDiv.style.alignItems = 'center';
     taskDiv.style.gap = '12px';
 
-    // Remove old children if any
     while (taskDiv.firstChild) taskDiv.removeChild(taskDiv.firstChild);
     taskDiv.appendChild(titleSpan);
     taskDiv.appendChild(descSpan);
     taskDiv.appendChild(createdDate);
     taskDiv.appendChild(completedDate);
 
-    // Buttons container with flex styling
     const buttonsWrapper = document.createElement('div');
     buttonsWrapper.style.display = 'flex';
     buttonsWrapper.style.gap = '8px';
@@ -164,8 +140,6 @@ function createTaskElement(task) {
     buttonsWrapper.appendChild(btnEdit);
     buttonsWrapper.appendChild(btnDelete);
     taskDiv.appendChild(buttonsWrapper);
-
-    // Button event handlers
 
     btnComplete.addEventListener('click', () => {
         toggleTaskCompletion(task.id);
@@ -181,11 +155,9 @@ function createTaskElement(task) {
         setTaskEditable(taskDiv, task);
     });
 
-    // Return the constructed task element
     return taskDiv;
 }
 
-// Toggle task completion state and update completedAt accordingly
 function toggleTaskCompletion(taskId) {
     const idx = tasks.findIndex(t => t.id === taskId);
     if (idx === -1) return;
@@ -198,17 +170,13 @@ function toggleTaskCompletion(taskId) {
     saveTasks();
     renderTasks();
 }
-
-// Delete task and rerender
 function deleteTask(taskId) {
     tasks = tasks.filter(t => t.id !== taskId);
     saveTasks();
     renderTasks();
 }
 
-// Set task card to editable state with inputs; allow cancel/save
 function setTaskEditable(taskDiv, task) {
-    // Replace title and desc spans with text inputs
     const titleInput = document.createElement('input');
     titleInput.type = 'text';
     titleInput.className = 'edit-input';
